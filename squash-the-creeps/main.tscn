@@ -29,6 +29,8 @@ MobScene = ExtResource("2_gbmuk")
 
 [node name="Ground" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, -1, 2.08165e-12)
+collision_layer = 4
+collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
 shape = SubResource("BoxShape3D_mxlae")
@@ -72,10 +74,11 @@ mesh = SubResource("CylinderMesh_ivct0")
 curve = SubResource("Curve3D_a4cd3")
 
 [node name="SpawnLocation" type="PathFollow3D" parent="SpawnPath"]
-transform = Transform3D(0.00217386, 0, 0.999998, 0, 1, 0, -0.999998, 0, 0.00217386, -13.9833, 0, -15.0162)
+transform = Transform3D(0.00217433, 0, 0.999997, 0, 1, 0, -0.999997, 0, 0.00217433, -13.9833, 0, -15.0162)
 
 [node name="MobTimer" type="Timer" parent="."]
 wait_time = 0.5
 autostart = true
 
+[connection signal="Hit" from="Player" to="." method="OnPlayerHit"]
 [connection signal="timeout" from="MobTimer" to="." method="OnMobTimerTimeout"]
