@@ -10,11 +10,20 @@ public partial class Main : Node
 	public override void _Ready()
 	{
 		GD.Randomize();
+		GetNode<Control>("UserInterface/Retry").Hide();
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+	}
+
+	public override void _UnhandledInput(InputEvent @event)
+	{
+		if (@event.IsActionPressed("ui_accept") && GetNode<Control>("UserInterface/Retry").Visible)
+		{
+			GetTree().ReloadCurrentScene();
+		}
 	}
 
 	public void OnMobTimerTimeout()
@@ -26,11 +35,14 @@ public partial class Main : Node
 		Vector3 playerPosition = GetNode<Player>("Player").Position;
 		mob.Initialize(mobSpawnLocation.Position, playerPosition);
 
+		mob.Squashed += GetNode<ScoreLabel>("UserInterface/ScoreLabel").OnMobSquashed;
+
 		AddChild(mob);
 	}
 
 	public void OnPlayerHit()
 	{
 		GetNode<Timer>("MobTimer").Stop();
+		GetNode<Control>("UserInterface/Retry").Show();
 	}
 }

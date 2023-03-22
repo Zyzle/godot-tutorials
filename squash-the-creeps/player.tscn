@@ -8,7 +8,7 @@ radius = 1.0311
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_qacvn"]
 height = 0.448832
-radius = 1.13668
+radius = 1.00563
 
 [node name="Player" type="CharacterBody3D"]
 collision_mask = 6
@@ -28,7 +28,7 @@ collision_mask = 2
 monitorable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MobDetector"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.396196, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.574376, 0)
 shape = SubResource("CylinderShape3D_qacvn")
 
 [connection signal="body_entered" from="MobDetector" to="." method="OnMobDetectorBodyEntered"]

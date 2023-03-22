@@ -1,13 +1,18 @@
-[gd_scene load_steps=9 format=3 uid="uid://ckp5cg5x5yfdd"]
+[gd_scene load_steps=13 format=3 uid="uid://ckp5cg5x5yfdd"]
 
 [ext_resource type="Script" path="res://Main.cs" id="1_od20v"]
 [ext_resource type="PackedScene" uid="uid://cr14pk18jlvan" path="res://player.tscn" id="1_pdtl6"]
 [ext_resource type="PackedScene" uid="uid://dn21j0s2lbqsr" path="res://mob.tscn" id="2_gbmuk"]
+[ext_resource type="FontFile" uid="uid://curht6jn1wg06" path="res://fonts/Montserrat-Medium.ttf" id="4_7hshf"]
+[ext_resource type="Script" path="res://ScoreLabel.cs" id="5_bliao"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_mxlae"]
 size = Vector3(60, 2, 60)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fbddk"]
+
 [sub_resource type="BoxMesh" id="BoxMesh_n16wv"]
+material = SubResource("StandardMaterial3D_fbddk")
 size = Vector3(60, 2, 60)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r3cmk"]
@@ -22,6 +27,10 @@ _data = {
 "tilts": PackedFloat32Array(0, 0, 0, 0, 0)
 }
 point_count = 5
+
+[sub_resource type="Theme" id="Theme_axjdo"]
+default_font = ExtResource("4_7hshf")
+default_font_size = 22
 
 [node name="Main" type="Node"]
 script = ExtResource("1_od20v")
@@ -39,7 +48,8 @@ shape = SubResource("BoxShape3D_mxlae")
 mesh = SubResource("BoxMesh_n16wv")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, -6.76539e-16, 1.19292e-16, -2.28741e-16, -0.16417, 0.986432, -6.47776e-16, -0.986432, -0.16417, 2.08165e-12, 15, 2.08165e-12)
+transform = Transform3D(1, -6.76539e-16, 1.19292e-16, -2.94939e-16, -0.265977, 0.963979, -6.20441e-16, -0.963979, -0.265977, 2.08165e-12, 15, 2.08165e-12)
+shadow_enabled = true
 
 [node name="Player" parent="." instance=ExtResource("1_pdtl6")]
 
@@ -79,6 +89,49 @@ transform = Transform3D(0.00217433, 0, 0.999997, 0, 1, 0, -0.999997, 0, 0.002174
 [node name="MobTimer" type="Timer" parent="."]
 wait_time = 0.5
 autostart = true
+
+[node name="UserInterface" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_axjdo")
+
+[node name="ScoreLabel" type="Label" parent="UserInterface"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 81.0
+offset_bottom = 46.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Score: 0"
+script = ExtResource("5_bliao")
+
+[node name="Retry" type="ColorRect" parent="UserInterface"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0941176, 0.0941176, 0.0941176, 0.180392)
+
+[node name="Label" type="Label" parent="UserInterface/Retry"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -106.5
+offset_top = -15.5
+offset_right = 106.5
+offset_bottom = 15.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Press Enter to retry"
 
 [connection signal="Hit" from="Player" to="." method="OnPlayerHit"]
 [connection signal="timeout" from="MobTimer" to="." method="OnMobTimerTimeout"]
